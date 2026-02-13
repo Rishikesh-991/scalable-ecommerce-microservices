@@ -323,3 +323,69 @@ spec:
     - http01:
         ingress:
           class: istio
+## Monitoring (Prometheus & Grafana)
+
+We deploy Prometheus and Grafana using the `kube-prometheus-stack` chart and load dashboards via a ConfigMap.
+
+To deploy monitoring locally:
+
+```bash
+# Deploy monitoring stack
+./k8s/scripts/deploy-monitoring.sh monitoring
+
+# Port-forward (in background)
+./k8s/scripts/port-forward-monitoring.sh monitoring
+
+# Prometheus: http://localhost:9090
+# Grafana: http://localhost:3000 (default admin/admin)
+```
+
+Grafana dashboards are stored in `k8s/monitoring/grafana/dashboards` and loaded via a ConfigMap.
+
+
+## CI/CD (GitHub Actions)
+
+A CI/CD workflow is provided in `.github/workflows/ci-cd.yml`.
+
+- `build-and-push` builds Docker images for each service and pushes to the registry (requires `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` secrets).
+- `deploy-dev` deploys to the Kubernetes cluster in the `ecommerce` namespace (requires `KUBE_CONFIG` secret encoded as base64).
+- `deploy-prod` runs when triggered with `deploy=prod` and uses `values-prod.yaml` for production settings.
+
+Secrets required in GitHub:
+- `DOCKERHUB_USERNAME`
+- `DOCKERHUB_TOKEN`
+- `KUBE_CONFIG` (base64 encoded kubeconfig for target cluster)
+
+
+## Deployment Strategies
+
+### Rolling Updates
+All Helm charts include a `strategy` configuration with `RollingUpdate` and sensible defaults in `values.yaml`. Ensure the following are present in your charts' `deployment.yaml`:
+
+- `.spec.strategy.type: RollingUpdate`
+- `maxSurge` and `maxUnavailable` set (percentage or integer)
+- Proper `livenessProbe` and `readinessProbe` configured
+
+Example frontend values are at `k8s/helm/ecommerce-frontend/values.yaml`.
+
+
+### Blue-Green (Frontend) with Istio
+A sample Istio `DestinationRule` and `VirtualService` are located at `k8s/istio/frontend-blue-green.yaml` showing how to define `v1` and `v2` subsets and use weights to switch traffic.
+
+To perform a blue-green switch:
+1. Deploy `ecommerce-frontend` with `version: v1` label.
+2. Deploy second deployment with `version: v2` (same service selector).
+3. Update `frontend-blue-green.yaml` to route traffic weight to `v2` (v1:0, v2:100).
+
+
+## Observability Dashboards
+
+Dashboard JSON files are under `k8s/monitoring/grafana/dashboards/`. The primary dashboard is `ecommerce-overview.json` which includes:
+- CPU usage
+- Memory usage
+- HTTP request latency
+- Service status (up)
+
+You can add screenshot images (dashboard thumbnails) to the repo under `k8s/monitoring/grafana/images/` and reference them in docs.
+
+

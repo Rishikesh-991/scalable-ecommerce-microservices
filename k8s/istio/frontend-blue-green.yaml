@@ -1,0 +1,37 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: frontend-dest
+  namespace: ecommerce
+spec:
+  host: ecommerce-frontend-ecommerce
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+    - name: v2
+      labels:
+        version: v2
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: frontend-vs
+  namespace: ecommerce
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - ecommerce-gateway
+  http:
+    - name: blue-green
+      route:
+        - destination:
+            host: ecommerce-frontend-ecommerce
+            subset: v1
+          weight: 100
+      retries:
+        attempts: 2
+        perTryTimeout: 2s
+      timeout: 10s
+# To switch to v2, update weight: v1=0, v2=100 or configure canary percentages
