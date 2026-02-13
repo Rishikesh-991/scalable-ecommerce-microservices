@@ -1,128 +1,106 @@
-Scalable Microservices E-Commerce Platform
-Table of Contents
+# Scalable Microservices E-Commerce Platform
 
-Project Overview
+## Table of Contents
 
-Architecture
+- [Project Overview](#project-overview)
+- [Architecture](#architecture)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Repository Structure](#repository-structure)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [Running the Platform](#running-the-platform)
+- [Docker & Docker Compose](#docker--docker-compose)
+- [Kubernetes Deployment](#kubernetes-deployment)
+- [Event-Driven Architecture](#event-driven-architecture)
+- [Payment Integration](#payment-integration)
+- [Authentication & Security](#authentication--security)
+- [Testing](#testing)
+- [CI/CD](#cicd)
+- [Monitoring & Observability](#monitoring--observability)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
-Features
+---
 
-Tech Stack
-
-Repository Structure
-
-Getting Started
-
-Environment Variables
-
-Running the Platform
-
-Docker & Docker Compose
-
-Kubernetes Deployment
-
-Event-Driven Architecture
-
-Payment Integration
-
-Authentication & Security
-
-Testing
-
-CI/CD
-
-Monitoring & Observability
-
-Contributing
-
-License
-
-Contact
-
-Project Overview
+## Project Overview
 
 This repository contains a production-grade microservices e-commerce platform built with industry best practices for scalability, security, and observability.
 
-Key goals:
+**Key Goals:**
 
-Modular microservices architecture
+- Modular microservices architecture
+- Event-driven communication via RabbitMQ
+- Payment integration with Stripe
+- Secure authentication with JWT
+- Containerized deployment with Docker and Kubernetes
+- Ready for AWS EC2 or EKS deployment
 
-Event-driven communication via RabbitMQ
+---
 
-Payment integration with Stripe
-
-Secure authentication with JWT
-
-Containerized deployment with Docker and Kubernetes
-
-Ready for AWS EC2 or EKS deployment
-
-Architecture
+## Architecture
 
 The system is composed of the following microservices:
 
-Service	Tech	Port	Description
-Products	Node.js/Express	5000	Manage products, deals, and inventory
-Cart	Spring Boot	8080	Customer cart management
-Users	FastAPI/Python	9090	User management (CRUD)
-Search	Node.js/Proxy	4000	Search and Elasticsearch integration
-Frontend	React	3000	Customer-facing web application
-Auth (planned)	Spring Boot	8081	JWT-based authentication
-Payments (planned)	Node.js/Express	8082	Stripe payment processing
-Orders (planned)	Spring Boot	8083	Order lifecycle management
+| Service | Tech | Port | Description |
+|---------|------|------|-------------|
+| Products | Node.js/Express | 5000 | Manage products, deals, and inventory |
+| Cart | Spring Boot | 8080 | Customer cart management |
+| Users | FastAPI/Python | 9090 | User management (CRUD) |
+| Search | Node.js/Proxy | 4000 | Search and Elasticsearch integration |
+| Frontend | React | 3000 | Customer-facing web application |
+| Auth (planned) | Spring Boot | 8081 | JWT-based authentication |
+| Payments (planned) | Node.js/Express | 8082 | Stripe payment processing |
+| Orders (planned) | Spring Boot | 8083 | Order lifecycle management |
 
-Databases & Message Broker:
+**Databases & Message Broker:**
 
-MongoDB: Product data and deals
+- MongoDB: Product data and deals
+- Redis: Cart caching
+- PostgreSQL: User data
+- RabbitMQ: Event-driven messaging
 
-Redis: Cart caching
+---
 
-PostgreSQL: User data
+## Features
 
-RabbitMQ: Event-driven messaging
+- Microservices architecture
+- Event-driven communication with RabbitMQ
+- Payment workflow (Stripe test integration)
+- JWT-based authentication (planned)
+- Input validation & rate limiting
+- Multi-database support: MongoDB, Redis, PostgreSQL
+- Dockerized and container-ready
+- Kubernetes deployment support
+- Full documentation & quick start guide
 
-Features
+---
 
-Microservices architecture
+## Tech Stack
 
-Event-driven communication with RabbitMQ
+- **Backend:** Node.js, Express, Spring Boot, FastAPI  
+- **Frontend:** React, Material-UI  
+- **Databases:** MongoDB, PostgreSQL, Redis  
+- **Message Broker:** RabbitMQ  
+- **Search Engine:** Elasticsearch (optional)  
+- **Containerization:** Docker, Docker Compose  
+- **Orchestration:** Kubernetes (Helm charts)  
+- **Payment:** Stripe API (Test Mode)  
+- **CI/CD:** GitHub Actions  
+- **Monitoring:** Prometheus & Grafana (planned)  
 
-Payment workflow (Stripe test integration)
+---
 
-JWT-based authentication (planned)
-
-Input validation & rate limiting
-
-Multi-database support: MongoDB, Redis, PostgreSQL
-
-Dockerized and container-ready
-
-Kubernetes deployment support
-
-Full documentation & quick start guide
-
-Tech Stack
-
-Backend: Node.js, Express, Spring Boot, FastAPI
-Frontend: React, Material-UI
-Databases: MongoDB, PostgreSQL, Redis
-Message Broker: RabbitMQ
-Search Engine: Elasticsearch (optional)
-Containerization: Docker, Docker Compose
-Orchestration: Kubernetes (Helm charts)
-Payment: Stripe API (Test Mode)
-CI/CD: GitHub Actions
-Monitoring: Prometheus & Grafana (planned)
-
-Repository Structure
+## Repository Structure
 scalable-ecommerce-microservices/
-├─ .github/                # CI/CD workflows
-├─ cart-cna-microservice/  # Cart service
-├─ products-cna-microservice/  # Products service
-├─ search-cna-microservice/    # Search service
-├─ users-cna-microservice/     # Users service
-├─ store-ui/               # Frontend React app
-├─ k8s/                    # Kubernetes manifests
+├─ .github/
+├─ cart-cna-microservice/
+├─ products-cna-microservice/
+├─ search-cna-microservice/
+├─ users-cna-microservice/
+├─ store-ui/
+├─ k8s/
 ├─ .dockerignore
 ├─ .gitignore
 ├─ .env.production
@@ -135,30 +113,28 @@ scalable-ecommerce-microservices/
 ├─ README_UPDATES.md
 └─ DATABASE_VERIFICATION.sh
 
-Getting Started
-Prerequisites
+---
 
-Docker >= 20.x
+## Getting Started
 
-Docker Compose >= 2.x
+### Prerequisites
 
-Node.js >= 18.x
+- Docker >= 20.x  
+- Docker Compose >= 2.x  
+- Node.js >= 18.x  
+- npm >= 9.x  
+- Python >= 3.11  
+- Java >= 17  
 
-npm >= 9.x
+### Clone Repository
 
-Python >= 3.11
-
-Java >= 17
-
-Clone Repository
+```bash
 git clone https://github.com/Rishikesh-991/scalable-ecommerce-microservices.git
 cd scalable-ecommerce-microservices
 
 Environment Variables
 
-All sensitive keys and service ports are stored in .env.production.
-
-Key Variables:
+All sensitive keys and ports are in .env.production:
 
 # Database
 MONGO_URI=mongodb://admin:admin123@localhost:27017/ecommerce
@@ -184,40 +160,35 @@ USERS_PORT=9090
 FRONTEND_PORT=3000
 
 
-⚠️ Do not commit .env.production to public repos in production environments. Use secrets management (AWS Secrets Manager, Vault, etc.).
+
+⚠️ Do not commit .env.production to public repos in production environments. Use secrets management.
 
 Running the Platform
-Quick Start (15 minutes)
-
-Start Databases and Services
-
+Quick Start (15 min)
+# Start databases & services
 docker-compose up -d
-docker-compose ps  # Verify all services are healthy
+docker-compose ps
 
-
-Export Environment Variables
-
+# Export environment variables
 export $(cat .env.production | xargs)
 
-
 Start Microservices
-Open four terminals:
 
-Terminal 1 – Products Service
+Terminal 1 – Products:
 
 cd products-cna-microservice
 npm install
 npm start
 
 
-Terminal 2 – Cart Service
+Terminal 2 – Cart:
 
 cd cart-cna-microservice
 export SPRING_REDIS_HOST=localhost
 gradle bootRun
 
 
-Terminal 3 – Users Service
+Terminal 3 – Users:
 
 cd users-cna-microservice
 pip install pipenv
@@ -226,56 +197,40 @@ pipenv shell
 python app.py
 
 
-Terminal 4 – Frontend
+Terminal 4 – Frontend:
 
 cd store-ui
 npm install
 npm start
 
-
 Verify Services
-
 curl http://localhost:5000/
 curl http://localhost:8080/
 curl http://localhost:9090/docs
 
 
-Open Frontend
-
-http://localhost:3000
-
-Test Workflow
-
-Browse products, add to cart, checkout (Stripe test cards)
+Open frontend: http://localhost:3000
 
 Docker & Docker Compose
-
-Start Everything
-
+# Start everything
 docker-compose up -d
 
-
-Stop Everything
-
+# Stop everything
 docker-compose down
 
-
-View Logs
-
+# View logs
 docker-compose logs -f <service_name>
 
-
-Check Status
-
+# Check status
 docker-compose ps
 
 Kubernetes Deployment
 
-All services containerized and ready for Helm deployment
+Services are containerized and ready for Helm deployment
 
-Manifests located in k8s/ folder
+Manifests are in k8s/
 
-Includes Deployments, Services, ConfigMaps, Secrets, and PersistentVolumes
+Includes Deployments, Services, ConfigMaps, Secrets, PersistentVolumes
 
 See K8S_DEPLOYMENT_GUIDE.md for full instructions
 
@@ -285,13 +240,11 @@ RabbitMQ as message broker
 
 Standardized event format (JSON)
 
-Topics:
-
-order.*, payment.*, user.*, inventory.*
+Topics: order.*, payment.*, user.*, inventory.*
 
 Consumers for notifications, analytics, inventory updates
 
-Example Event
+Example Event:
 
 {
   "eventId": "evt_12345",
@@ -308,11 +261,11 @@ Stripe test mode configured
 
 Endpoints (planned):
 
-/payments/intent – create PaymentIntent
+/payments/intent
 
-/payments/status/:id – check payment status
+/payments/status/:id
 
-/payments/webhook – Stripe webhook
+/payments/webhook
 
 Test cards:
 
@@ -326,41 +279,37 @@ Authentication & Security
 
 JWT auth (planned)
 
-Input validation across all services
-
-Rate limiting per endpoint
+Input validation and rate limiting
 
 HTTPS/TLS planned for production
 
-Secrets managed via environment variables
+Secrets via environment variables
 
 Testing
 
-Unit tests for all microservices
+Unit tests for all services
 
 Integration tests for workflows
 
-End-to-End (E2E) tests for checkout and cart
+End-to-End tests for checkout & cart
 
-Test coverage target: 70%+
+Coverage target: 70%+
 
 CI/CD
 
-GitHub Actions workflows planned:
+GitHub Actions workflows planned: Build → Test → Security Scan → Deploy
 
-Build → Test → Security Scan → Deploy
-
-Dockerized services ensure reproducible builds
+Dockerized services for reproducible builds
 
 Monitoring & Observability
 
-Health checks per service: /health
+Health checks: /health
 
 Metrics endpoint: /metrics (Prometheus)
 
 Centralized logging (planned ELK stack)
 
-Tracing with distributed traceId
+Distributed tracing with traceId
 
 Contributing
 
@@ -390,4 +339,4 @@ Contact
 
 Repository: https://github.com/Rishikesh-991/scalable-ecommerce-microservices
 
-Email: rishikesh@example.com
+Email: rishikeshkourav991@gmail.com
