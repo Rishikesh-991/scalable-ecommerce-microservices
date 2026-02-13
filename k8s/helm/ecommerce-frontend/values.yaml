@@ -1,37 +1,29 @@
-replicaCount: 3
+replicaCount: 2
 image:
-  repository: ecommerce/frontend
+  repository: docker.io/yourorg/store-ui
   tag: latest
-  
+  pullPolicy: IfNotPresent
 resources:
   requests:
     cpu: 100m
     memory: 128Mi
   limits:
-    cpu: 500m
+    cpu: 300m
     memory: 512Mi
-
-service:
-  type: ClusterIP
-  port: 3000
-
-ingress:
-  enabled: true
-  className: istio
-  hosts:
-    - host: localhost
-      paths:
-        - path: /
-          pathType: Prefix
-
-env:
-  - name: REACT_APP_API_URL
-    value: "http://api.localhost"
-
-autoscaling:
-  enabled: true
-  minReplicas: 2
-  maxReplicas: 5
-
-nodeSelector:
-  workload: backend
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 25%
+    maxUnavailable: 25%
+livenessProbe:
+  httpGet:
+    path: /health
+    port: 80
+  initialDelaySeconds: 10
+  periodSeconds: 10
+readinessProbe:
+  httpGet:
+    path: /health
+    port: 80
+  initialDelaySeconds: 5
+  periodSeconds: 5
