@@ -1,0 +1,81 @@
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+  namespace: ecommerce
+spec:
+  mtls:
+    mode: STRICT
+
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+  namespace: istio-system
+spec:
+  mtls:
+    mode: PERMISSIVE
+
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: deny-all
+  namespace: ecommerce
+spec:
+  {} # Deny all by default
+
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-frontend
+  namespace: ecommerce
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"]
+    to:
+    - operation:
+        methods: ["GET", "POST", "PUT", "DELETE"]
+
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-products-api
+  namespace: ecommerce
+spec:
+  selector:
+    matchLabels:
+      app: products
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/ecommerce/sa/*"]
+    to:
+    - operation:
+        methods: ["GET", "POST"]
+
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-users-api
+  namespace: ecommerce
+spec:
+  selector:
+    matchLabels:
+      app: users
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/ecommerce/sa/*"]
+    to:
+    - operation:
+        methods: ["GET", "POST", "PUT"]

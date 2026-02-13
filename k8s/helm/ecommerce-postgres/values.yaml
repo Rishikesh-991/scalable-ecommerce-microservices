@@ -1,0 +1,34 @@
+postgresql:
+  auth:
+    username: admin
+    password: admin123
+    postgresPassword: postgres123
+    database: ecommerce
+  
+  primary:
+    resources:
+      requests:
+        cpu: 250m
+        memory: 256Mi
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+    persistence:
+      enabled: true
+      size: 10Gi
+      storageClassName: local-storage
+  
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+
+  nodeSelector:
+    workload: database
+
+service:
+  type: ClusterIP
+  port: 5432
+
+backup:
+  enabled: false

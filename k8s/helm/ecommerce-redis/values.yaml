@@ -1,0 +1,32 @@
+redis:
+  auth:
+    enabled: true
+    password: redis123
+  
+  replica:
+    replicaCount: 1
+  
+  master:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+    persistence:
+      enabled: true
+      size: 5Gi
+      storageClassName: local-storage
+  
+  nodeSelector:
+    workload: database
+
+service:
+  type: ClusterIP
+  port: 6379
+
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true

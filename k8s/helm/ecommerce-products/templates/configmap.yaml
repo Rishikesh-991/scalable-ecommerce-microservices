@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "ecommerce-products.fullname" . }}-config
+  labels:
+    {{- include "ecommerce-products.labels" . | nindent 4 }}
+data:
+  database-name: {{ .Values.mongodb.database }}
+  mongodb-host: {{ .Values.mongodb.host }}
+  mongodb-port: "{{ .Values.mongodb.port }}"

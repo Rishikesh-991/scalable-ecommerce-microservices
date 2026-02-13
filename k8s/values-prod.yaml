@@ -1,0 +1,53 @@
+# Production Environment Values Override
+# Applied to all Helm charts in prod environment
+
+global:
+  environment: prod
+  domain: api.production.local
+  imagePullPolicy: Always
+
+# Production replicas (high availability)
+replicaCount: 3
+
+# Full resource allocation for prod
+resources:
+  requests:
+    cpu: 500m
+    memory: 512Mi
+  limits:
+    cpu: 2000m
+    memory: 2Gi
+
+# Enable autoscaling in prod
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 20
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+# Database persistence (large size for prod)
+persistence:
+  size: 100Gi
+  storageClassName: fast-ssd
+
+# Ingress with TLS for prod
+ingress:
+  className: istio
+  tls:
+    enabled: true
+    issuer: letsencrypt-prod
+
+# Logging in prod
+logging:
+  level: info
+  format: json
+
+# Pod disruption budgets for prod
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 2
+
+# Network policies enabled
+networkPolicy:
+  enabled: true

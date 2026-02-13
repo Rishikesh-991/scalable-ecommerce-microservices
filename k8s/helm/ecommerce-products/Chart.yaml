@@ -1,0 +1,17 @@
+apiVersion: v2
+name: ecommerce-products
+description: Helm chart for ecommerce Products microservice
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+keywords:
+  - ecommerce
+  - products
+  - microservice
+  - nodejs
+home: https://github.com/your-org/ecommerce-microservices
+sources:
+  - https://github.com/your-org/ecommerce-microservices
+maintainers:
+  - name: DevOps Team
+    email: devops@your-company.com
