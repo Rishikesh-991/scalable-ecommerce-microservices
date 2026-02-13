@@ -1,0 +1,9 @@
+apiVersion: v2
+name: ecommerce-mongodb  
+description: MongoDB database for ecommerce platform
+type: application
+version: 1.0.0
+dependencies:
+  - name: mongodb
+    version: "13.1.0"
+    repository: https://charts.bitnami.com/bitnami

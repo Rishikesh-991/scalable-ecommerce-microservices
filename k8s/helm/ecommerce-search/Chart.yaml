@@ -1,0 +1,6 @@
+apiVersion: v2
+name: ecommerce-search
+description: Helm chart for ecommerce Search microservice (Elasticsearch proxy)
+type: application
+version: 1.0.0
+appVersion: "1.0.0"

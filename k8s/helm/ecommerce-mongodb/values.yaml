@@ -1,0 +1,30 @@
+mongodb:
+  auth:
+    enabled: true
+    rootPassword: root123
+    username: admin
+    password: admin123
+    database: ecommerce
+  
+  replica:
+    enabled: false
+  
+  persistence:
+    enabled: true
+    size: 10Gi
+    storageClassName: local-storage
+  
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+  
+  nodeSelector:
+    workload: database
+
+service:
+  type: ClusterIP
+  port: 27017

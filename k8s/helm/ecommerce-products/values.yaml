@@ -1,0 +1,170 @@
+# Default values for ecommerce-products Helm chart
+# This is a YAML-formatted file. Values are case-sensitive.
+
+# Global settings
+global:
+  environment: dev
+  domain: localhost
+  imagePullPolicy: IfNotPresent
+
+# Products service deployment configuration
+replicaCount: 2
+
+image:
+  repository: ecommerce/products
+  tag: latest
+  pullPolicy: IfNotPresent
+
+# Pod configuration
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "5000"
+  prometheus.io/path: "/metrics"
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  caps:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+
+# Resource requests and limits
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+# Autoscaling configuration
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+# Service configuration
+service:
+  type: ClusterIP
+  port: 5000
+  targetPort: 5000
+  annotations: {}
+
+# Ingress configuration
+ingress:
+  enabled: true
+  className: istio
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: products.localhost
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: products-tls
+      hosts:
+        - products.localhost
+
+# Environment variables and configuration
+env:
+  NODE_ENV: production
+  PORT: "5000"
+  LOG_LEVEL: info
+
+# MongoDB connection
+mongodb:
+  enabled: true
+  host: mongodb
+  port: 27017
+  database: ecommerce
+  # These are set via secrets
+  # username: admin
+  # password: (from secret)
+
+# Liveness and readiness probes
+livenessProbe:
+  httpGet:
+    path: /health
+    port: 5000
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /health
+    port: 5000
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  timeoutSeconds: 3
+  failureThreshold: 2
+
+# Pod disruption budget
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+
+# Network policy
+networkPolicy:
+  enabled: true
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: ecommerce
+
+# Istio configuration
+istio:
+  enabled: true
+  virtualService:
+    enabled: true
+    timeout: 30s
+    retries:
+      attempts: 3
+      perTryTimeout: 10s
+  destinationRule:
+    enabled: true
+    loadBalancer: ROUND_ROBIN
+    tlsMode: ISTIO_MUTUAL
+
+# Monitoring and observability
+monitoring:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    interval: 30s
+
+# Persistence for temporary storage
+persistence:
+  enabled: false
+  size: 1Gi
+  storageClassName: local-storage
+  mountPath: /tmp
+
+# Node affinity
+nodeSelector:
+  workload: backend
+
+tolerations: []
+
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app
+                operator: In
+                values:
+                  - products
+          topologyKey: kubernetes.io/hostname

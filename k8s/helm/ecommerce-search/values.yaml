@@ -1,0 +1,24 @@
+global:
+  environment: dev
+replicaCount: 1
+image:
+  repository: ecommerce/search
+  tag: latest
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi
+service:
+  type: ClusterIP
+  port: 4000
+env:
+  NODE_ENV: production
+  PORT: "4000"
+elasticsearch:
+  host: elasticsearch
+  port: 9200
+nodeSelector:
+  workload: backend
