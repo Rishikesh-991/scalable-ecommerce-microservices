@@ -1,0 +1,37 @@
+{
+  "annotations": {"list": []},
+  "panels": [
+    {
+      "type": "row",
+      "title": "Ecommerce Overview",
+      "gridPos": {"h": 1, "w": 24, "x": 0, "y": 0}
+    },
+    {
+      "type": "graph",
+      "title": "CPU Usage (cluster)",
+      "targets": [{"expr": "sum(rate(container_cpu_usage_seconds_total[5m])) by (instance)", "legendFormat": "{{instance}}"}],
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 1}
+    },
+    {
+      "type": "graph",
+      "title": "Memory Usage (cluster)",
+      "targets": [{"expr": "sum(container_memory_usage_bytes) by (instance)", "legendFormat": "{{instance}}"}],
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 1}
+    },
+    {
+      "type": "graph",
+      "title": "HTTP Request Duration (p50/p95)",
+      "targets": [{"expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le,service))", "legendFormat": "p95 {{service}}"}],
+      "gridPos": {"h": 6, "w": 12, "x": 0, "y": 9}
+    },
+    {
+      "type": "stat",
+      "title": "Services Up",
+      "targets": [{"expr": "sum(up) by (job)", "legendFormat": "{{job}}"}],
+      "gridPos": {"h": 6, "w": 12, "x": 12, "y": 9}
+    }
+  ],
+  "schemaVersion": 27,
+  "title": "Ecommerce Overview",
+  "version": 1
+}
