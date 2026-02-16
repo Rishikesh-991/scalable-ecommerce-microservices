@@ -24,6 +24,19 @@
 
 ---
 
+
+## Make this repository industry-level for public/portfolio use
+
+If your goal is to showcase this project publicly, follow the actionable checklist in [`PUBLIC_REPO_CHECKLIST.md`](./PUBLIC_REPO_CHECKLIST.md).
+
+It includes:
+- Repository hygiene files (`LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`)
+- Documentation and demo expectations
+- CI/testing quality signals recruiters look for
+- A 30-minute quick upgrade plan specific to this project
+
+---
+
 ## Project Overview
 
 This repository contains a production-grade microservices e-commerce platform built with industry best practices for scalability, security, and observability.
