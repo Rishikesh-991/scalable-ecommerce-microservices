@@ -1,131 +1,173 @@
-Guide READMEs in a clean format:
+# Quick Start
 
-# Scalable E-Commerce Microservices
+This guide gives fast, practical paths to run the platform in four modes:
+1. Local development
+2. Docker Compose
+3. Kubernetes (Helm)
+4. Terraform-driven infrastructure workflow
 
 ---
 
-## 1️⃣ Developer Quickstart
+## 1. Prerequisites
 
-### Prerequisites
-- Docker >= 20.x
-- Docker Compose >= 2.x
+Install the following tools:
+
+- Git
+- Docker >= 20.x and Docker Compose >= 2.x
 - Node.js >= 18.x
-- npm >= 9.x
-- Python >= 3.11
-- Java >= 17
+- Java 17+ and Gradle
+- Python 3.11+ and Pipenv
+- Kubernetes CLI tooling (for K8s path): `kubectl`, `helm`
+- Terraform >= 1.5 (for IaC path)
 
-### Clone & Setup
+Verify installation:
+
+```bash
+git --version
+docker --version
+docker compose version
+node --version
+java --version
+python --version
+kubectl version --client
+helm version
+terraform version
+```
+
+---
+
+## 2. Clone and initialize
+
 ```bash
 git clone https://github.com/Rishikesh-991/scalable-ecommerce-microservices.git
 cd scalable-ecommerce-microservices
-cp .env.production.example .env.production
-export $(cat .env.production | xargs)
+```
 
-Start Services (Docker)
+Create local environment variables (never commit real secrets):
+
+```bash
+cp .env.production .env.local 2>/dev/null || true
+```
+
+---
+
+## 3. Local development (service-by-service)
+
+### 3.1 Start platform dependencies
+
+```bash
 docker-compose up -d
+```
+
+### 3.2 Start application services
+
+Open separate terminals:
+
+```bash
+# Products API
+cd products-cna-microservice
+npm install
+npm start
+```
+
+```bash
+# Cart API
+cd cart-cna-microservice
+gradle bootRun
+```
+
+```bash
+# Users API
+cd users-cna-microservice
+pipenv install
+pipenv run python app.py
+```
+
+```bash
+# Frontend
+cd store-ui
+npm install
+npm start
+```
+
+### 3.3 Verify
+
+```bash
+curl -i http://localhost:5000/
+curl -i http://localhost:8080/
+curl -i http://localhost:9090/docs
+```
+
+UI: <http://localhost:3000>
+
+---
+
+## 4. Docker Compose path
+
+Use this when you want repeatable local runtime and dependency bootstrapping.
+
+```bash
+# Start
+docker-compose up -d
+
+# Inspect
 docker-compose ps
+docker-compose logs -f
 
-Start Microservices
-
-Products Service:
-
-cd products-cna-microservice && npm install && npm start
-
-
-Cart Service:
-
-cd cart-cna-microservice && gradle bootRun
-
-
-Users Service:
-
-cd users-cna-microservice && pipenv install && pipenv shell && python app.py
-
-
-Frontend:
-
-cd store-ui && npm install && npm start
-
-Verify
-curl http://localhost:5000/
-curl http://localhost:8080/
-curl http://localhost:9090/docs
-
-
-Frontend Access: http://localhost:3000
-
-Useful Commands
-
-Stop all services:
-
+# Stop
 docker-compose down
+```
 
+See [DOCKER.md](./DOCKER.md) for build optimization and multi-stage guidance.
 
-View logs:
+---
 
-docker-compose logs -f <service_name>
+## 5. Kubernetes path (Helm)
 
+### 5.1 Create a local Kind cluster (optional)
 
-Rebuild Docker images:
+```bash
+bash k8s/scripts/setup-kind-cluster.sh
+```
 
-docker-compose build --no-cache
+### 5.2 Deploy development profile
 
+```bash
+bash k8s/scripts/deploy-dev.sh
+```
 
-✅ 1-page, developer-focused, fast for onboarding engineers.
+### 5.3 Check workload health
 
-2️⃣ User Guide
-Overview
+```bash
+kubectl get ns
+kubectl get pods -A
+kubectl get svc -A
+```
 
-This is a web-based e-commerce platform with:
+See [KUBERNETES.md](./KUBERNETES.md) for deployment strategies and chart structure.
 
-Browse products
+---
 
-Add to cart
+## 6. Terraform path (infrastructure workflow)
 
-Checkout via Stripe (test mode)
+> The repo currently documents a recommended Terraform structure and workflow. If your team adds Terraform code, follow this process.
 
-User management (signup/login)
+```bash
+cd infra/environments/dev
+terraform init
+terraform fmt -check
+terraform validate
+terraform plan -out tfplan
+terraform apply tfplan
+```
 
-Access
+See [TERRAFORM.md](./TERRAFORM.md) for module, remote state, and promotion strategy.
 
-Frontend URL: http://localhost:3000
+---
 
-API Docs (Users Service): http://localhost:9090/docs
+## 7. Next steps
 
-Quick Start
-
-Open Frontend
-Navigate to http://localhost:3000
-
-Create Account / Login
-Signup with email/password
-
-Browse Products
-View product catalog and use search if needed
-
-Add to Cart
-Select quantity and add items
-
-Checkout
-Use Stripe test cards:
-
-4242 4242 4242 4242 → success
-
-4000 0000 0000 0002 → declined
-
-View Orders
-Check order status on dashboard
-
-Notes
-
-Platform runs in local test mode
-
-No real payments will be processed
-
-User data is stored in PostgreSQL (local Docker)
-
-Support
-
-Contact: rishikeshkourav991@gmail.com
-
-Repository: GitHub
+- Engineering workflow: [DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md)
+- Deployment and promotion: [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)
+- Security controls: [SECURITY.md](./SECURITY.md)
+- Monitoring and SLO practices: [MONITORING.md](./MONITORING.md)
