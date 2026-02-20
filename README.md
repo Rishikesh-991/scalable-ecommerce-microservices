@@ -76,3 +76,7 @@ For full workflows, see the [Quick Start guide](./docs/deployment/quick-start.md
 ## License
 
 Licensed under the MIT License. See [LICENSE](./LICENSE).
+## Author
+
+Created and maintained by **Rishikesh (Rishikesh-991)**  
+GitHub: https://github.com/Rishikesh-991
