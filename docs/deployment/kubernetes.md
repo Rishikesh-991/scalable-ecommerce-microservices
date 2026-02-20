@@ -88,6 +88,6 @@ kubectl logs deploy/<name> -n <namespace>
 
 ## 8. Related docs
 
-- [ARCHITECTURE.md](./ARCHITECTURE.md)
-- [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)
-- [MONITORING.md](./MONITORING.md)
+- [ARCHITECTURE.md](../architecture/overview.md)
+- [DEPLOYMENT_GUIDE.md](../operations/deployment-guide.md)
+- [MONITORING.md](../operations/monitoring.md)

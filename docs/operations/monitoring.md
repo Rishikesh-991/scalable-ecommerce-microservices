@@ -89,6 +89,6 @@ Integrate Alertmanager with Slack/Email/PagerDuty for incident escalation.
 
 ## 8. Related docs
 
-- [KUBERNETES.md](./KUBERNETES.md)
-- [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)
-- [SECURITY.md](./SECURITY.md)
+- [KUBERNETES.md](../deployment/kubernetes.md)
+- [DEPLOYMENT_GUIDE.md](./deployment-guide.md)
+- [SECURITY.md](../security/security.md)

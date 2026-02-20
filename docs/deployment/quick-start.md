@@ -118,7 +118,7 @@ docker-compose logs -f
 docker-compose down
 ```
 
-See [DOCKER.md](./DOCKER.md) for build optimization and multi-stage guidance.
+See [DOCKER.md](./docker.md) for build optimization and multi-stage guidance.
 
 ---
 
@@ -144,7 +144,7 @@ kubectl get pods -A
 kubectl get svc -A
 ```
 
-See [KUBERNETES.md](./KUBERNETES.md) for deployment strategies and chart structure.
+See [KUBERNETES.md](./kubernetes.md) for deployment strategies and chart structure.
 
 ---
 
@@ -161,13 +161,13 @@ terraform plan -out tfplan
 terraform apply tfplan
 ```
 
-See [TERRAFORM.md](./TERRAFORM.md) for module, remote state, and promotion strategy.
+See [TERRAFORM.md](./terraform.md) for module, remote state, and promotion strategy.
 
 ---
 
 ## 7. Next steps
 
-- Engineering workflow: [DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md)
-- Deployment and promotion: [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)
-- Security controls: [SECURITY.md](./SECURITY.md)
-- Monitoring and SLO practices: [MONITORING.md](./MONITORING.md)
+- Engineering workflow: [DEVELOPMENT_GUIDE.md](../operations/development-guide.md)
+- Deployment and promotion: [DEPLOYMENT_GUIDE.md](../operations/deployment-guide.md)
+- Security controls: [SECURITY.md](../security/security.md)
+- Monitoring and SLO practices: [MONITORING.md](../operations/monitoring.md)

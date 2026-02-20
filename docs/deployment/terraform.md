@@ -81,5 +81,5 @@ terraform destroy
 
 ## 8. Related docs
 
-- [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)
-- [SECURITY.md](./SECURITY.md)
+- [DEPLOYMENT_GUIDE.md](../operations/deployment-guide.md)
+- [SECURITY.md](../security/security.md)

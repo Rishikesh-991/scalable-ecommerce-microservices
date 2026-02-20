@@ -91,6 +91,6 @@ Recommended tags:
 
 ## 7. Related docs
 
-- [QUICK_START.md](./QUICK_START.md)
-- [KUBERNETES.md](./KUBERNETES.md)
-- [SECURITY.md](./SECURITY.md)
+- [QUICK_START.md](./quick-start.md)
+- [KUBERNETES.md](./kubernetes.md)
+- [SECURITY.md](../security/security.md)
