@@ -8,56 +8,66 @@
 
 Production-style e-commerce platform using a polyglot microservices architecture (Node.js, Spring Boot, FastAPI, React), with Docker-first local setup and Kubernetes/Terraform deployment assets.
 
-## Project Overview
+## 🧠 Project Overview
 
-Scalable E-Commerce Microservices is a production-inspired distributed system designed to model real-world backend architecture patterns.  
+This repository demonstrates real-world DevOps engineering patterns by building a distributed microservices platform that:
 
-The platform decomposes core e-commerce domains — catalog, cart, users, and search — into independently deployable services, each with its own technology stack and data store.
+- Runs in containers (Docker)
+- Deploys on Kubernetes (Helm charts)
+- Manages infrastructure with Terraform
+- Uses asynchronous messaging (RabbitMQ)
+- Implements observability (Prometheus + Grafana)
+- Separates concerns into independent services
 
-The project emphasizes:
+Rather than being a simple CRUD project, it focuses on *DevOps‑relevant workflows*, deployment patterns, and automation best practices.
 
-- Service isolation and database-per-service design  
-- Asynchronous communication using RabbitMQ  
-- Polyglot backend architecture  
-- Containerized local development  
-- Kubernetes-ready deployment  
-- Infrastructure-as-Code patterns with Terraform  
-
-Rather than focusing only on CRUD functionality, this repository demonstrates system design, operational readiness, and distributed systems fundamentals.
-
+---
 ## Why This Project
 
-Modern backend systems are rarely monolithic. Production environments demand:
+DevOps environments demand:
 
-- Independent service scaling  
-- Technology flexibility per domain  
-- Fault isolation  
-- Clear service boundaries  
-- Infrastructure automation  
-- Observability and monitoring  
+- Declarative infrastructure provisioning  
+- Immutable, containerized application artifacts  
+- Zero‑touch deployments and CI/CD  
+- Monitoring and alerting of distributed components  
+- Resilience and fault‑tolerant systems  
+- Decoupled operations across teams
 
-This project was built to simulate those real-world concerns in a controlled environment.
+This project demonstrates:
 
-It serves as:
+- Docker + Kubernetes orchestration
+- Terraform for cloud infrastructure
+- Automated deployment strategies
+- Monitoring integration
+- Multi‑service observability
+- Environment configuration and secrets management
 
-- A practical exploration of microservices architecture  
-- A demonstration of DevOps-oriented engineering practices  
-- A portfolio-ready showcase of distributed system design  
-- A foundation for experimenting with scalability, resilience, and event-driven patterns  
+---
+## ⚙️ DevOps Oriented Technology Stack
 
-The goal is not just to build an application — but to model how modern systems are structured and operated.
+| Layer | Tools |
+|-------|-------|
+| Containerization | Docker |
+| Orchestration | Kubernetes + Helm |
+| Infrastructure as Code | Terraform |
+| Messaging | RabbitMQ |
+| Observability | Prometheus, Grafana |
+| Logging | Standard out / sidecar patterns |
+| Local Dev Orchestration | Docker Compose |
 
+---
 
-## Key Features
+## 🧩 Key DevOps Focus Areas
 
-- Polyglot microservices (Node.js, Spring Boot, FastAPI)  
-- Database-per-service design (MongoDB, PostgreSQL, Redis)  
-- Event-driven architecture with RabbitMQ  
-- Dockerized local development  
-- Kubernetes & Helm deployment support  
-- Infrastructure-as-Code with Terraform  
-- Structured production-grade documentation  
+- **Dockerized services** with multi‑stage builds
+- **Kubernetes manifests + Helm charts**
+- **Terraform IaC for environment provisioning**
+- **Centralized monitoring (Prometheus + Grafana)**
+- **Service health checks and readiness probes**
+- **Environment configuration management**
+- **Documentation aligned with industry standards**
 
+---
 
 ## Implemented services
 
