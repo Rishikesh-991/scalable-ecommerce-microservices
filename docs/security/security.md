@@ -70,5 +70,5 @@ If you discover a vulnerability:
 
 ## 9. Related docs
 
-- [MONITORING.md](./MONITORING.md)
-- [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)
+- [MONITORING.md](../operations/monitoring.md)
+- [DEPLOYMENT_GUIDE.md](../operations/deployment-guide.md)

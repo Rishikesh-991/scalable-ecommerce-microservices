@@ -23,7 +23,7 @@ git checkout -b docs/kubernetes-guide-refresh
 
 ## 3. Local setup
 
-Follow [QUICK_START.md](./QUICK_START.md) for environment bootstrapping and service startup.
+Follow [QUICK_START.md](../deployment/quick-start.md) for environment bootstrapping and service startup.
 
 ## 4. Code quality checks
 

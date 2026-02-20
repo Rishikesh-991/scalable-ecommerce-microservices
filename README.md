@@ -1,43 +1,43 @@
 # Scalable E-Commerce Microservices
 
-Production-style e-commerce platform built with a polyglot microservices architecture (Node.js, Spring Boot, FastAPI, React), containerized with Docker, and prepared for Kubernetes deployment.
-
-## Why this project matters
-
-This repository demonstrates real-world software engineering concerns beyond CRUD APIs:
-- Service decomposition and polyglot backend design
-- Async/event-oriented integration patterns
-- Multi-database architecture (MongoDB, PostgreSQL, Redis)
-- Dockerized local environments and Kubernetes-ready deployment
-- Platform documentation expected in industry teams
+Production-style e-commerce platform using a polyglot microservices architecture (Node.js, Spring Boot, FastAPI, React), with Docker-first local setup and Kubernetes/Terraform deployment assets.
 
 ## Implemented services
 
-| Service | Stack | Default Port | Purpose |
+| Service | Stack | Default Port | Primary responsibility |
 |---|---|---:|---|
-| `products-cna-microservice` | Node.js + Express | 5000 | Product catalog and inventory data |
-| `cart-cna-microservice` | Spring Boot | 8080 | Cart operations and pricing workflow |
-| `users-cna-microservice` | FastAPI | 9090 | User lifecycle and user APIs |
-| `search-cna-microservice` | Node.js | 4000 | Search gateway / search integration |
-| `store-ui` | React | 3000 | Customer web UI |
+| `products-cna-microservice` | Node.js + Express | 5000 | Product catalog and deals APIs (MongoDB-backed) |
+| `cart-cna-microservice` | Spring Boot | 8080 | Cart operations and pricing flow (Redis-backed) |
+| `users-cna-microservice` | FastAPI | 9090 | User lifecycle APIs (PostgreSQL-backed) |
+| `search-cna-microservice` | Node.js | 4000 | Search integration service (Elasticsearch-oriented) |
+| `store-ui` | React | 3000 | Storefront UI consuming backend APIs |
 
-## Documentation index
+## Documentation
 
-Start here, then go deeper by topic:
+All repository-level docs now live under [`/docs`](./docs/README.md) and are grouped by category:
 
-- **[QUICK_START.md](./QUICK_START.md)** — local setup, Docker, Kubernetes, Terraform entry points
-- **[ARCHITECTURE.md](./ARCHITECTURE.md)** — architecture views, request/data flow, trade-offs
-- **[DOCKER.md](./DOCKER.md)** — image strategy, compose usage, environment handling
-- **[KUBERNETES.md](./KUBERNETES.md)** — Helm charts, manifests, deployment strategy
-- **[TERRAFORM.md](./TERRAFORM.md)** — infrastructure-as-code structure and workflow
-- **[MONITORING.md](./MONITORING.md)** — Prometheus/Grafana, health checks, logging model
-- **[DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md)** — local engineering workflow and quality gates
-- **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)** — environment promotion and release runbook
-- **[SECURITY.md](./SECURITY.md)** — threat model, secrets management, scanning
-- **[CONTRIBUTING.md](./CONTRIBUTING.md)** — contribution process and standards
-- **[CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)** — community behavior expectations
-- **[ROADMAP.md](./ROADMAP.md)** — current priorities and planned evolution
-- **[LICENSE](./LICENSE)** — open-source license terms
+- **Architecture**
+  - [Overview](./docs/architecture/overview.md)
+  - [Diagrams](./docs/architecture/diagrams.md)
+    - High-level architecture
+    - Service-to-service communication
+    - RabbitMQ / async event flow
+    - Request lifecycle flowchart
+- **Deployment**
+  - [Quick Start](./docs/deployment/quick-start.md)
+  - [Docker](./docs/deployment/docker.md)
+  - [Kubernetes](./docs/deployment/kubernetes.md)
+  - [Terraform](./docs/deployment/terraform.md)
+- **Operations**
+  - [Development Guide](./docs/operations/development-guide.md)
+  - [Deployment Runbook](./docs/operations/deployment-guide.md)
+  - [Monitoring](./docs/operations/monitoring.md)
+- **Security**
+  - [Security Guide](./docs/security/security.md)
+- **Project governance**
+  - [Contributing](./docs/project/contributing.md)
+  - [Code of Conduct](./docs/project/code-of-conduct.md)
+  - [Roadmap](./docs/project/roadmap.md)
 
 ## Repository structure
 
@@ -48,42 +48,30 @@ Start here, then go deeper by topic:
 ├── search-cna-microservice/
 ├── users-cna-microservice/
 ├── store-ui/
+├── docs/
+│   ├── architecture/
+│   ├── deployment/
+│   ├── operations/
+│   ├── project/
+│   └── security/
 ├── k8s/
-│   ├── helm/
-│   ├── monitoring/
-│   └── scripts/
-├── docker-compose.yml
-└── *.md documentation files
+└── docker-compose.yml
 ```
-
-## Tech stack
-
-- **Backend:** Node.js/Express, Spring Boot, FastAPI
-- **Frontend:** React
-- **Data:** MongoDB, PostgreSQL, Redis
-- **Messaging:** RabbitMQ
-- **Containers & Orchestration:** Docker, Docker Compose, Kubernetes, Helm
-- **Observability:** Prometheus/Grafana (via `k8s/scripts/deploy-monitoring.sh`)
 
 ## Quick run
 
 ```bash
-# 1) Start platform dependencies
+# Start shared dependencies
 docker-compose up -d
 
-# 2) Start services (in separate terminals)
+# Run services (separate terminals)
 cd products-cna-microservice && npm install && npm start
 cd cart-cna-microservice && gradle bootRun
 cd users-cna-microservice && pipenv install && pipenv run python app.py
 cd store-ui && npm install && npm start
 ```
 
-For complete workflows (including Kubernetes and Terraform patterns), see [QUICK_START.md](./QUICK_START.md).
-
-## Project quality notes
-
-- This repo contains solid implementation assets, but some CI files are currently commented-out and should be enabled as part of hardening.
-- Documentation has been organized to support portfolio review, onboarding, and production readiness conversations.
+For full workflows, see the [Quick Start guide](./docs/deployment/quick-start.md).
 
 ## License
 

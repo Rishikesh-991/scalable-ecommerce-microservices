@@ -4,7 +4,7 @@ Thank you for contributing. This guide defines the expected workflow for high-qu
 
 ## 1. Before you start
 
-- Read [README.md](./README.md) and [DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md).
+- Read [README.md](../../README.md) and [DEVELOPMENT_GUIDE.md](../operations/development-guide.md).
 - Search existing issues/PRs to avoid duplicate work.
 - For significant changes, open an issue first to align on scope.
 
@@ -58,8 +58,8 @@ Please include:
 
 ## 7. Security issues
 
-For sensitive vulnerabilities, follow [SECURITY.md](./SECURITY.md) and report privately.
+For sensitive vulnerabilities, follow [SECURITY.md](../security/security.md) and report privately.
 
 ## 8. Code of Conduct
 
-By participating, you agree to follow [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md).
+By participating, you agree to follow [CODE_OF_CONDUCT.md](./code-of-conduct.md).

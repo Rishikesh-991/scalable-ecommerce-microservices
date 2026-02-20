@@ -2,7 +2,7 @@
 
 ## 1. System overview
 
-This platform uses a microservices architecture with a React storefront and polyglot backend services. Each service owns its runtime and domain concerns.
+This platform uses a microservices architecture with a React storefront and polyglot backend services. Each service owns its runtime and domain concerns. See detailed views in [Architecture Diagrams](./diagrams.md).
 
 ### Service map
 
@@ -17,10 +17,11 @@ flowchart LR
   P --> M[(MongoDB)]
   C --> R[(Redis)]
   US --> PG[(PostgreSQL)]
-  P --> MQ[(RabbitMQ)]
-  C --> MQ
-  US --> MQ
-  S --> MQ
+  MQ[(RabbitMQ)]
+  P -. planned async integration .-> MQ
+  C -. planned async integration .-> MQ
+  US -. planned async integration .-> MQ
+  S -. planned async integration .-> MQ
 ```
 
 ## 2. Request and data flow
@@ -32,12 +33,12 @@ flowchart LR
 3. Product metadata is returned from MongoDB-backed APIs.
 4. User adds an item to cart.
 5. Cart service persists/updates cart state (Redis-oriented flow).
-6. Optional events are published to RabbitMQ for decoupled consumers.
+6. Optional asynchronous events can be published to RabbitMQ as event-driven features are enabled.
 
 ### 2.2 Cross-service communication model
 
 - **Synchronous:** HTTP API calls from frontend to domain services.
-- **Asynchronous:** RabbitMQ events for workflows that should not block user requests.
+- **Asynchronous (planned/iterative):** RabbitMQ-backed events for workflows that should not block user requests.
 
 ## 3. Design decisions and trade-offs
 

@@ -74,6 +74,6 @@ helm rollback <release> <revision> -n ecommerce
 
 ## 8. Related docs
 
-- [KUBERNETES.md](./KUBERNETES.md)
-- [MONITORING.md](./MONITORING.md)
-- [SECURITY.md](./SECURITY.md)
+- [KUBERNETES.md](../deployment/kubernetes.md)
+- [MONITORING.md](./monitoring.md)
+- [SECURITY.md](../security/security.md)
